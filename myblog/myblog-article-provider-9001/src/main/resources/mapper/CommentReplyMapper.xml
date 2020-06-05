@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.longer.mapperDao.CommentReplyDao">
+    <insert id="insertComment" parameterType="com.longer.entities.Comment">
+        INSERT INTO bl_comment(content,commentAccount,articleid,commentTime) VALUES(#{content},#{commentAccount},#{articleid},#{commentTime})
+    </insert>
+    <insert id="insertReply" parameterType="com.longer.entities.Reply">
+        INSERT INTO bl_reply(content,repplyAccount,toRepplyAccount,commentid,replyTime) VALUES(#{content},#{replyAccount},#{toRepplyAccount},#{commentid},#{replyTime})
+    </insert>
+    <!--  #{replyCurPage},#{replyShowCount}-->
+    <select id="selectCommentReply" resultType="com.longer.entities.Comment">
+          {call selectReply(
+            #{replyCurPage,mode=IN,jdbcType=INTEGER},
+            #{replyShowCount,mode=IN,jdbcType=INTEGER}
+          )};
+          SELECT c.*,u1.nickname commentNickname,
+            u1.avatarUrl commentAvatarUrl,
+            GROUP_CONCAT(a.id) repplyId,
+            GROUP_CONCAT(a.repplyAccount) repplyAccount,
+            GROUP_CONCAT(a.replyTime) replyTime,
+            GROUP_CONCAT(a.content) replyContent,
+            GROUP_CONCAT(u2.nickname) replyNickName,
+            GROUP_CONCAT(u2.avatarUrl) replyAvatarUrl,
+            GROUP_CONCAT(u3.nickname) toNickName,
+            GROUP_CONCAT(u3.avatarUrl) toAvatarUrl
+            FROM bl_comment c
+            LEFT JOIN (SELECT  * FROM temptable GROUP BY id) a
+            ON c.id=a.commentid
+            LEFT JOIN myblog_user.bl_user u1
+            ON c.commentAccount=u1.account
+            LEFT JOIN myblog_user.bl_user u2
+            ON a.repplyAccount=u2.account
+            LEFT JOIN myblog_user.bl_user u3
+            ON a.toRepplyAccount=u3.account
+            WHERE articleid=#{articleid}
+            and c.state=1
+            GROUP BY c.id
+            LIMIT #{curPage},#{showCount}
+    </select>
+    <!--软删除评论-->
+    <update id="updateCommentById" parameterType="com.longer.entities.Comment">
+        UPDATE bl_comment
+        SET state=#{state}
+        WHERE id=#{id}
+    </update>
+    <!--软删除回复-->
+    <update id="updateReplyById" parameterType="com.longer.entities.Reply">
+        UPDATE bl_reply
+        SET state=#{state}
+        WHERE id=#{id}
+    </update>
+    <!--添加举报内容-->
+    <insert id="insertReportComment" parameterType="com.longer.entities.Reportcomment">
+        INSERT INTO bl_reportcomment(commentId,reportAccount,reportContent,createTime) VALUES(#{commentId},#{reportAccount},#{reportContent},#{createTime})
+    </insert>
+    <!--添加回复内容-->
+    <insert id="insertReportReply" parameterType="com.longer.entities.Reportreply">
+         INSERT INTO bl_reportreply(replyId,reportAccount,reportContent,createTime) VALUES(#{replyId},#{reportAccount},#{reportContent},#{createTime})
+    </insert>
+
+    <!--查看举报评论列表-->
+    <select id="selectReportComment" resultType="com.longer.entities.Reportcomment">
+        SELECT r.*,c.content commentContent,c.commentAccount,
+        ( SELECT count(c.id)
+        from
+        bl_reportcomment r
+        LEFT JOIN bl_comment c
+        on r.commentId=c.id
+        where r.state=#{state}
+        <if test="reportAccount!='' and reportAccount!=null ">
+            AND reportAccount like concat('%',#{reportAccount},'%')
+        </if>) count
+        from
+        bl_reportcomment r
+        LEFT JOIN bl_comment c
+        on r.commentId=c.id
+        where r.state=#{state}
+        <if test="reportAccount!='' and reportAccount!=null ">
+            AND reportAccount like concat('%',#{reportAccount},'%')
+        </if>
+        <if test="time!=0 ">
+            ORDER BY createTime DESC
+        </if>
+        LIMIT #{curPage},#{showCount}
+    </select>
+    <!--查看举报回复列表-->
+    <select id="selectReportReply" resultType="com.longer.entities.Reportreply">
+        SELECT r.*,c.content replyContent,c.repplyAccount,(
+        SELECT count(c.id)
+        from
+        bl_reportreply r
+        LEFT JOIN bl_reply c
+        on r.replyId=c.id
+        where r.state=#{state}
+        <if test="reportAccount!='' and reportAccount!=null ">
+            AND reportAccount like concat('%',#{reportAccount},'%')
+        </if>
+        ) count
+        from
+        bl_reportreply r
+        LEFT JOIN bl_reply c
+        on r.replyId=c.id
+        where r.state=#{state}
+        <if test="reportAccount!='' and reportAccount!=null ">
+            AND reportAccount like concat('%',#{reportAccount},'%')
+        </if>
+        <if test="time!=0 ">
+            ORDER BY createTime DESC
+        </if>
+        LIMIT #{curPage},#{showCount}
+    </select>
+<!--    成立举报评论-->
+    <update id="updateCommentStateSuccess" parameterType="com.longer.entities.Reply">
+        UPDATE bl_comment set state=0
+        WHERE id=#{id};
+        UPDATE bl_reportcomment set state=1
+        WHERE commentId=#{id};
+    </update>
+<!--    驳回举报评论-->
+    <update id="updateCommentStateFail" parameterType="com.longer.entities.Reply">
+        UPDATE bl_reportcomment set state=1
+        WHERE id=#{id}
+    </update>
+<!--    成立举报回复-->
+    <update id="updateReplyStateSuccess" parameterType="com.longer.entities.Reply">
+        UPDATE bl_reply set state=0
+        WHERE id=#{id};
+        UPDATE bl_reportreply set state=1
+        WHERE replyId=#{id};
+    </update>
+<!--    驳回举报回复-->
+    <update id="updateReplyStateFail" parameterType="com.longer.entities.Reply">
+        UPDATE bl_reportreply set state=1
+        WHERE id=#{id}
+    </update>
+    <select id="selectArticleidByReplyId" resultType="java.lang.Integer">
+        SELECT articleid
+        FROM bl_comment
+        WHERE id=(SELECT commentid
+        FROM bl_reply
+        WHERE id=#{id})
+    </select>
+    <select id="selectArticleidByCommentId" resultType="java.lang.Integer">
+        SELECT articleid
+        FROM bl_comment
+        WHERE id=#{id}
+    </select>
+</mapper>

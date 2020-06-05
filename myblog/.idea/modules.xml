@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/myblog.iml" filepath="$PROJECT_DIR$/myblog.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myblog-api-1001/myblog-api-1001.iml" filepath="$PROJECT_DIR$/myblog-api-1001/myblog-api-1001.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myblog-article-consumer-5001/myblog-article-consumer-5001.iml" filepath="$PROJECT_DIR$/myblog-article-consumer-5001/myblog-article-consumer-5001.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myblog-article-provider-9001/myblog-article-provider-9001.iml" filepath="$PROJECT_DIR$/myblog-article-provider-9001/myblog-article-provider-9001.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myblog-article-provider-9002/myblog-article-provider-9002.iml" filepath="$PROJECT_DIR$/myblog-article-provider-9002/myblog-article-provider-9002.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myblog-config-3344/myblog-config-3344.iml" filepath="$PROJECT_DIR$/myblog-config-3344/myblog-config-3344.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myblog-dashboard-7788/myblog-dashboard-7788.iml" filepath="$PROJECT_DIR$/myblog-dashboard-7788/myblog-dashboard-7788.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myblog-eureka-7001/myblog-eureka-7001.iml" filepath="$PROJECT_DIR$/myblog-eureka-7001/myblog-eureka-7001.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myblog-eureka-7002/myblog-eureka-7002.iml" filepath="$PROJECT_DIR$/myblog-eureka-7002/myblog-eureka-7002.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myblog-user-consumer-6001/myblog-user-consumer-6001.iml" filepath="$PROJECT_DIR$/myblog-user-consumer-6001/myblog-user-consumer-6001.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myblog-user-provider-8001/myblog-user-provider-8001.iml" filepath="$PROJECT_DIR$/myblog-user-provider-8001/myblog-user-provider-8001.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myblog-user-provider-8002/myblog-user-provider-8002.iml" filepath="$PROJECT_DIR$/myblog-user-provider-8002/myblog-user-provider-8002.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myblog-zuul-gateway-9527/myblog-zuul-gateway-9527.iml" filepath="$PROJECT_DIR$/myblog-zuul-gateway-9527/myblog-zuul-gateway-9527.iml" />
+    </modules>
+  </component>
+</project>

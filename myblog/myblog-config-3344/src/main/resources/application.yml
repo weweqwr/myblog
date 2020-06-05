@@ -1,0 +1,17 @@
+server:
+  port: 3344
+spring:
+  application:
+    name: myblog-config-3344
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/weweqwr/myblog-config.git
+eureka:
+  client:
+    service-url:
+      defaultZone: http://129.204.122.20:7001/eureka/,http://121.36.48.89:7002/eureka/
+  instance:
+    instance-id: myblog-config-3344
+    prefer-ip-address: true

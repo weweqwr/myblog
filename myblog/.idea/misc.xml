@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/myblog-user-consumer-7001/pom.xml" />
+        <option value="$PROJECT_DIR$/myblog-user-consumer-9001/pom.xml" />
+        <option value="$PROJECT_DIR$/../myblog-api-1001/pom.xml" />
+        <option value="$PROJECT_DIR$/../myblog-article-consumer-5001/pom.xml" />
+        <option value="$PROJECT_DIR$/../myblog-article-provider-9001/pom.xml" />
+        <option value="$PROJECT_DIR$/../myblog-article-provider-9002/pom.xml" />
+        <option value="$PROJECT_DIR$/../myblog-config-3344/pom.xml" />
+        <option value="$PROJECT_DIR$/../myblog-dashboard-7788/pom.xml" />
+        <option value="$PROJECT_DIR$/../myblog-eureka-7001/pom.xml" />
+        <option value="$PROJECT_DIR$/../myblog-eureka-7002/pom.xml" />
+        <option value="$PROJECT_DIR$/../myblog-user-consumer-6001/pom.xml" />
+        <option value="$PROJECT_DIR$/../myblog-user-provider-8001/pom.xml" />
+        <option value="$PROJECT_DIR$/../myblog-user-provider-8002/pom.xml" />
+        <option value="$PROJECT_DIR$/../myblog-zuul-gateway-9527/pom.xml" />
+        <option value="$PROJECT_DIR$/myblog-api-1001/pom.xml" />
+        <option value="$PROJECT_DIR$/myblog-article-consumer-5001/pom.xml" />
+        <option value="$PROJECT_DIR$/myblog-article-provider-9001/pom.xml" />
+        <option value="$PROJECT_DIR$/myblog-article-provider-9002/pom.xml" />
+        <option value="$PROJECT_DIR$/myblog-config-3344/pom.xml" />
+        <option value="$PROJECT_DIR$/myblog-dashboard-7788/pom.xml" />
+        <option value="$PROJECT_DIR$/myblog-eureka-7001/pom.xml" />
+        <option value="$PROJECT_DIR$/myblog-eureka-7002/pom.xml" />
+        <option value="$PROJECT_DIR$/myblog-user-consumer-6001/pom.xml" />
+        <option value="$PROJECT_DIR$/myblog-user-provider-8001/pom.xml" />
+        <option value="$PROJECT_DIR$/myblog-user-provider-8002/pom.xml" />
+        <option value="$PROJECT_DIR$/myblog-zuul-gateway-9527/pom.xml" />
+      </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/myblog-user-consumer-9001/pom.xml" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+</project>

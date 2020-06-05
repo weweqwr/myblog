@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.longer.mapperDao.RoleDao">
+    <!--根据账号查询角色-->
+    <select id="selectRoleByAccount" resultType="com.longer.entities.Role">
+        SELECT r.*
+        FROM bl_role r
+        INNER JOIN bl_user_role ur
+        on(r.roleid=ur.roleid)
+        where ur.account=#{account}
+    </select>
+</mapper>

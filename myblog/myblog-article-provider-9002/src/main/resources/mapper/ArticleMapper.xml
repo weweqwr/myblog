@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.longer.mapperDao.ArticleDao">
+<!--    添加文章-->
+    <insert id="insertArticle" parameterType="com.longer.entities.Article">
+        <if test="coverImage ==null or  coverImage =='' ">
+         INSERT INTO bl_article(title,content,author,createTime,textContent,state) VALUES (#{title},#{content},#{author},#{createTime},#{textContent},#{state});
+        </if>
+        <if test="coverImage !=null and  coverImage !='' ">
+        INSERT INTO bl_article(title,content,author,createTime,textContent,coverImage,state) VALUES (#{title},#{content},#{author},#{createTime},#{textContent},#{coverImage},#{state});
+        </if>
+    </insert>
+<!--文章的查询-->
+    <select id="selectArticle" resultType="com.longer.entities.Article">
+        SELECT b.*,count(com.articleid) commentCount
+        (select count(id) FROM bl_article
+        WHERE title LIKE CONCAT('%',#{title},'%')
+        OR textContent LIKE CONCAT('%',#{title},'%')
+        OR author LIKE CONCAT('%',#{title},'%') ) count
+        FROM (SELECT a.*,u.avatarUrl,u.nickname
+        FROM myblog_article.bl_article a
+        LEFT JOIN myblog_user.bl_user u
+        on a.author=u.account
+        WHERE a.state=#{state}
+        <if test="state==3">
+        or a.state=1
+        or a.state=0
+        </if>
+        <if test="id!=0">
+            AND a.id=#{id}
+        </if>
+        ) b,myblog_article.bl_comment com
+        WHERE
+        com.articleid=b.id
+        AND
+        b.title LIKE CONCAT('%',#{title},'%')
+        OR b.textContent LIKE CONCAT('%',#{title},'%')
+        OR b.author LIKE CONCAT('%',#{title},'%')
+        <if test="time==1">
+            ORDER BY b.createTime DESC
+        </if>
+        <if test="browse==1">
+            ORDER BY b.browse DESC
+        </if>
+        LIMIT #{curPage},#{showCount}
+    </select>
+    <!--我的文章的查询-->
+    <select id="selectArticleByAccountOrTitle" resultType="com.longer.entities.Article">
+        SELECT * from
+        (SELECT a.*,u.avatarUrl,u.nickname FROM myblog_article.bl_article a
+        LEFT JOIN myblog_user.bl_user u
+        ON a.author=u.account
+        WHERE a.state=#{state}
+        AND a.author=#{author}) b
+        <if test="title!=null and  title!=''">
+            WHERE b.textContent LIKE CONCAT('%',#{title},'%')
+            OR  b.title LIKE CONCAT('%',#{title},'%')
+        </if>
+        <if test="time==1">
+            ORDER BY b.createTime
+        </if>
+        <if test="browse==1">
+            ORDER BY b.browse
+        </if>
+        LIMIT #{curPage},#{showCount}
+    </select>
+    <!--文章的修改-->
+    <update id="updateArticle" parameterType="com.longer.entities.Article">
+        UPDATE bl_article
+        SET title=#{title},
+        content=#{content},
+        textContent=#{textContent},
+        state=#{state}
+        <if test="coverImage!=null and coverImage!=''">
+            ,coverImage=#{coverImage}
+        </if>
+        WHERE id=#{id}
+        AND author=#{author}
+    </update>
+    <!--下架文章-->
+    <update id="updateArticleStateByAuthorAndId" parameterType="com.longer.entities.Article">
+        UPDATE bl_article
+        SET state=#{state}
+        WHERE id=#{id}
+        <if test="author !=null">
+            AND author=#{author}
+        </if>
+    </update>
+    <!--删除文章-->
+    <delete id="deleteArticleStateByAuthorAndId" parameterType="com.longer.entities.Article">
+        DELETE FROM bl_article
+        WHERE id=#{id}
+        AND author=#{author}
+    </delete>
+    <!--文章浏览数+1-->
+    <update id="updateArticleBrowseAddById" parameterType="com.longer.entities.Article">
+        UPDATE bl_article a SET a.browse=a.browse+1 WHERE a.id=#{id}
+    </update>
+
+</mapper>

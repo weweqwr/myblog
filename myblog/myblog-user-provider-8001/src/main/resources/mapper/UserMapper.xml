@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.longer.mapperDao.UserDao">
+    <!--用户注册-->
+    <insert id="insertUserRedist" parameterType="java.lang.String">
+  	    INSERT INTO bl_user(account,password,createTime) VALUES(#{account},#{password},#{createTime});
+        INSERT INTO bl_user_role(userid,roleid) VALUES(#{account},1);
+    </insert>
+    <!--根据账号查询用户 1未普通用户，2为管理员，3为超级管理员-->
+    <select id="selectUserByAccount" resultType="com.longer.entities.User">
+    SELECT DISTINCT u.* FROM bl_user u,bl_user_role ur
+    WHERE u.account=#{account}
+        <if test="roleid==1">
+            and ur.roleid=1
+        </if>
+        <if test="roleid==2">
+            and ur.roleid=2
+        </if>
+        <if test="roleid==3">
+            and ur.roleid=3
+        </if>
+    and state=#{state};
+    </select>
+
+<!--    修改个人信息-->
+    <update id="updateUserInfo" parameterType="com.longer.entities.User">
+    UPDATE bl_user
+    SET nickname=#{nickname},
+    <if test="avatarUrl!=null">
+        avatarUrl=#{avatarUrl},
+    </if>
+    name=#{name},
+    gender=#{gender},
+    province=#{province},
+    city=#{city},
+    district=#{district},
+    maxim=#{maxim},
+    introduct=#{introduct}
+    where account=#{account}
+    </update>
+    <!--管理员的用户管理列表查询-->
+    <select id="selectAdminUserBy" resultType="com.longer.entities.User">
+        SELECT *,(SELECT count(id)
+        FROM bl_user
+        WHERE account
+        in
+        (SELECT account
+        FROM bl_user_role
+        WHERE roleid=#{roleid})
+        <if test="state!=3">
+            state=#{state}
+        </if>
+        <if test="account!='' and account!=null">
+            AND  account Like CONCAT('%',#{account},'%')
+        </if>) count
+        FROM bl_user
+        WHERE account
+        in
+        (SELECT account
+        FROM bl_user_role
+        WHERE roleid=#{roleid})
+        <if test="state!=3">
+            state=#{state}
+        </if>
+        <if test="account!='' and account!=null">
+            AND  account Like CONCAT('%',#{account},'%')
+        </if>
+        <if test="time==1">
+            ORDER BY createTime DESC
+        </if>
+        LIMIT #{curPage},#{showCount}
+    </select>
+    <!--管理员禁用用户-->
+    <update id="updateUserStateById">
+        UPDATE bl_user
+        SET state=#{state}
+        WHERE id=#{id}
+    </update>
+    <!--红人榜-->
+    <select id="selectHotUser" resultType="com.longer.entities.User">
+        SELECT u.nickname,u.avatarUrl,SUM(a.browse) browsesum
+        FROM myblog_article.bl_article a,
+        bl_user u
+        WHERE a.author=u.account
+        ORDER BY browsesum desc
+        limit 12
+    </select>
+</mapper>

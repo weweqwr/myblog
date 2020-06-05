@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="myblog-api-1001" />
+        <module name="demo" />
+        <module name="myblog-zuul-gateway-9527" />
+        <module name="myblog" />
+        <module name="myblog-article-consumer-5001" />
+        <module name="myblog-user-provider-8001" />
+        <module name="myblog-article-provider-9002" />
+        <module name="myblog-article-provider-9001" />
+        <module name="myblog-api" />
+        <module name="myblog-eureka-7002" />
+        <module name="myblog-eureka-7001" />
+        <module name="myblog-user-consumer-7001" />
+        <module name="myblog-dashboard-7788" />
+        <module name="myblog-user-consumer-6001" />
+        <module name="myblog-user-provider-8002" />
+        <module name="myblog-config-3344" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="demo" target="1.8" />
+      <module name="myblog" target="1.5" />
+      <module name="myblog-api" target="1.8" />
+      <module name="myblog-api-1001" target="1.8" />
+      <module name="myblog-article-consumer-5001" target="1.8" />
+      <module name="myblog-article-provider-9001" target="1.8" />
+      <module name="myblog-article-provider-9002" target="1.8" />
+      <module name="myblog-config-3344" target="1.8" />
+      <module name="myblog-dashboard-7788" target="1.8" />
+      <module name="myblog-eureka-3305" target="1.8" />
+      <module name="myblog-eureka-7001" target="1.8" />
+      <module name="myblog-eureka-7002" target="1.8" />
+      <module name="myblog-user-consumer-6001" target="1.8" />
+      <module name="myblog-user-consumer-7001" target="1.8" />
+      <module name="myblog-user-consumer-9001" target="1.8" />
+      <module name="myblog-user-provider-8001" target="1.8" />
+      <module name="myblog-user-provider-8002" target="1.8" />
+      <module name="myblog-zuul-gateway-9527" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="demo" options="-parameters" />
+      <module name="myblog-api" options="-parameters" />
+      <module name="myblog-api-1001" options="-parameters" />
+      <module name="myblog-article-consumer-5001" options="-parameters" />
+      <module name="myblog-article-provider-9001" options="-parameters" />
+      <module name="myblog-article-provider-9002" options="-parameters" />
+      <module name="myblog-config-3344" options="-parameters" />
+      <module name="myblog-dashboard-7788" options="-parameters" />
+      <module name="myblog-eureka-3305" options="-parameters" />
+      <module name="myblog-eureka-7001" options="-parameters" />
+      <module name="myblog-eureka-7002" options="-parameters" />
+      <module name="myblog-user-consumer-6001" options="-parameters" />
+      <module name="myblog-user-consumer-7001" options="-parameters" />
+      <module name="myblog-user-consumer-9001" options="-parameters" />
+      <module name="myblog-user-provider-8001" options="-parameters" />
+      <module name="myblog-user-provider-8002" options="-parameters" />
+      <module name="myblog-zuul-gateway-9527" options="-parameters" />
+    </option>
+  </component>
+</project>

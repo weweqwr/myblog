@@ -1,0 +1,7 @@
+spring:
+  cloud:
+    config:
+      name: myblog-article-consumer-5001-application
+      profile: dev
+      label: master
+      uri: http://129.204.122.20:3344
